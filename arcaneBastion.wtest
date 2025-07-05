@@ -1,0 +1,8 @@
+import mago.*
+
+
+test "La colision del hechizo empieza una posicon adelante en x " {
+    var posicionTemporal = new MutablePosition(x = 5, y =10)
+    const hechizo1 = new Hechizo(tipo = hielo, position = posicionTemporal, frames = hielo.frames(), danio = hielo.danio())
+    assert.equals(6, hechizo1.colisionActual().position().x())
+}
