@@ -7,6 +7,7 @@ import administradorDeEnemigos.*
 import administradorDeOleadas.*
 import niveles.*
 import sonidos.*
+
 object arcaneBastion {
   const property cosasConAnimacion = []
 
@@ -20,16 +21,19 @@ object arcaneBastion {
     pantallaInicial.desaparecerAlTocar()
     menu.activarModoFacil()
     menu.activarModoSurvival()
-    game.onTick(100, "movimiento", {administradorDeHechizos.moverHechizos()})//Se mueven hacia la derecha
-    game.onTick(250, "movimiento", {administradorDeEnemigos.moverEnemigosIzquierda()})
+    //game.onTick(100, "movimiento", {administradorDeHechizos.moverHechizos()})//Se mueven hacia la derecha
+    game.onTick(200, "movimiento", {administradorDeEnemigos.moverEnemigosIzquierda()})
+    game.onTick(100, "moverYColisionar", {
+      administradorDeHechizos.moverHechizos()
+      administradorDeHechizos.impactarHechizos()
+    })
     game.onTick(150, "animarTodo", {cosasConAnimacion.forEach({cosa => cosa.animar()})})
     game.onTick(3000, "oleadas", {
       if (administradorDeOleadas.estaActiva()) {
           administradorDeOleadas.generarProximoEnemigo()
       }
     })
-   
-    
+
     //administradorDeOleadas.iniciarOleada([dragon,dragon, dragon, dragon, dragon, dragon])
     //menu.iniciar()
   }

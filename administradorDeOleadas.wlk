@@ -1,3 +1,4 @@
+import administradorDeHechizos.*
 
 import administradorDeEnemigos.*
 import enemigos.*

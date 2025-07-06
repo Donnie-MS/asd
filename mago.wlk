@@ -35,34 +35,37 @@ class ColisionExtra{
   method moverDerecha() {
     position.goRight(1)
   }
+  method recibirAtaque(danioRecibido) {}
 }
 class Hechizo inherits CosaAnimada{
   const property tipo
   var property danio = tipo.danio()
   override method frames() = tipo.frames()
   var property position
-  var property colisionActual   
+  //var property colisionActual
+  method colisionar() {tipo.colisionar().apply(self)}
   method esEnemigo() = false
+  /*
   method initialize() {
     var posicionTemporal = new MutablePosition(x = position.x() + 1, y = position.y())
     colisionActual = new ColisionExtra(position = posicionTemporal)
     game.addVisual(colisionActual)
   }
+  */
   method moverDerecha() {
     if (position.x() == 96) {
       self.eliminar()
     } 
     else {
       position.goRight(1)
-      colisionActual.moverDerecha()
     }
   }
+  method recibirAtaque(danioRecibido) {}
   method eliminar() {
     game.removeVisual(self)
     administradorDeHechizos.destruirHechizo(self)
-    game.removeVisual(colisionActual)
   }
-  method colisionar() {}// esto es lo que ocurre cuando colisiona con algo
+
 }
 
 // ===============================
@@ -81,6 +84,17 @@ object magoProtagonista inherits Mago(tipoDeMagia = fuego, frames=["frame1MH.png
 class TiposDeMagia {
   const property frames
   const property danio
+  method colisionar() = { hechizo =>
+      const posicionEnFrente = new MutablePosition(x = hechizo.position().x() + 1, y = hechizo.position().y())
+      const objetosEnPosicion = game.getObjectsIn(hechizo.position()) + game.getObjectsIn(posicionEnFrente)
+
+      objetosEnPosicion.forEach({ objeto =>
+          if (objeto.esEnemigo()) {
+              objeto.recibirAtaque(hechizo.danio())
+              hechizo.eliminar()
+          }
+      })
+  }
 }
 
 object hielo inherits TiposDeMagia(frames = ["frame1HH.png", "frame2HH.png", "frame3HH.png", "frame4HH.png"],

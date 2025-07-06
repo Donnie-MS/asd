@@ -1,3 +1,4 @@
+import administradorDeHechizos.*
 import administradorDeOleadas.*
 import enemigos.*
 import menu.*

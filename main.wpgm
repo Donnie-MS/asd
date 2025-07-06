@@ -9,4 +9,3 @@ program ArcaneBastion {
 	arcaneBastion.iniciar()
 	game.start()
 }
-

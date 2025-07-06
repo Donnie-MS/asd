@@ -27,18 +27,7 @@ object administradorDeHechizos {
         self.sumarHechizo()
 
         hechizo.iniciar()
-        game.onCollideDo(hechizo.colisionActual(), { enemigo =>
-            if (enemigo.esEnemigo()) {
-                enemigo.recibirAtaque(hechizo.danio())
-                hechizo.eliminar()
-            }
-        })
-        game.onCollideDo(hechizo, { enemigo =>
-            if (enemigo.esEnemigo()) {
-                enemigo.recibirAtaque(hechizo.danio())
-                hechizo.eliminar()
-            }
-        })
+
     }
 
     // Mueve cada hechizo en la lista
